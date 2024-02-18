@@ -1,0 +1,3 @@
+backend_venv/*
+__pycache__/*
+.gitignore

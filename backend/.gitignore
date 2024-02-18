@@ -1,0 +1,4 @@
+/__pycache__
+/backend_venv
+/db_control/__pycache__
+.env
