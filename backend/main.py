@@ -65,19 +65,26 @@ def search_product(
     code = product_query.code
     try:
         with connection.cursor() as cursor:
-            sql = "SELECT PRD_ID, PRD_CD, PRD_NAME, PRD_PRICE FROM m_product WHERE PRD_CD = %s"
-            cursor.execute(sql, (code,))
-            result = cursor.fetchone()
+            # form input "4514603306514' OR '1"
+            sql = f"SELECT PRD_ID, PRD_CD, PRD_NAME, PRD_PRICE FROM m_product WHERE PRD_CD = '{code}'"
+            cursor.execute(sql)
+            print(sql)
+            result = cursor.fetchall()
             if result:
+                products = [
+                    {
+                        "PRD_ID": product[0],
+                        "PRD_CD": product[1],
+                        "PRD_NAME": product[2],
+                        "PRD_PRICE": product[3],
+                    }
+                    for product in result
+                ]
                 return {
                     "status": "success",
-                    "message": {
-                        "PRD_ID": result[0],
-                        "PRD_CD": result[1],
-                        "PRD_NAME": result[2],
-                        "PRD_PRICE": result[3],
-                    },
+                    "message": products,
                 }
+
             else:
                 raise HTTPException(status_code=404, detail="Product not found")
     finally:
