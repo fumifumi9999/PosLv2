@@ -41,11 +41,11 @@ export default function Home() {
     });
 
     const data = await res.json();
-    console.log(data)
+    // console.log(data.message)
     // ここは暫定      
     if (data.status === "success") {
-        setProduct(data.message);
-        console.log(data.message)
+        setProduct(data.message[0]);
+        console.log(data.message[0])
       } else {
         setProduct(null);
       }
